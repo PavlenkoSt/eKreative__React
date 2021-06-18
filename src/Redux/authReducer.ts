@@ -1,5 +1,3 @@
-// import { ActionTypes } from "./reduxStore"
-
 export const authActionsTypes = {
     SET_AUTH_STATUS: 'SET_AUTH_STATUS',
     SET_AUTH_USER: 'SET_AUTH_USER'
@@ -40,7 +38,6 @@ export default authReducer
 
 
 type InitialValueType = typeof initialValue
-// type ActionType = ActionTypes<typeof authActions>
 
 export type AuthUserType = {
     name: string

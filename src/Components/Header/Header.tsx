@@ -1,5 +1,5 @@
 import React from 'react'
-import { authSelector, authUserSelector } from '../Redux/selectors/authSelector'
+import { authSelector, authUserSelector } from '../../Redux/selectors/authSelector'
 import { useSelector } from 'react-redux'
 
 const Header = () => {

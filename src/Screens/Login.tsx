@@ -20,11 +20,6 @@ const Login = () => {
                 .init({ client_id: '529458314439-788b4lpbh90hb3q6lpr22klopfj36ou8.apps.googleusercontent.com' })
                 .then(_onInit, _onError)
         })
-
-        return () => {
-            // signOutWithGoogle()
-            // signOutWithFacebook()
-        }
     },[])
 
     const signInWithGoogle = async () => {
