@@ -9,11 +9,11 @@ type VideoForListPropsType = {
 
 const VideoForList: FC<VideoForListPropsType> = ({ id, title, photo}) => {
     return (
-        <NavLink to='/'>
-            <div>
+        <NavLink to='/' className='list__item'>
+            <div className='list__photo'>
                 <img src={photo} alt="photo" />
             </div>
-            <div>{title}</div>
+            <div className='list__title'>{title}</div>
         </NavLink>
     )
 }

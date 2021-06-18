@@ -14,7 +14,7 @@ const App = () => {
       <Header/>
       {!auth && <Redirect to='/login'/>}
       <Route path='/login' component={Login}/>
-      <Route path='/videosList' component={Videos}/>
+      <Route path={'/videosList'} component={Videos}/>
     </>
   )
 }
