@@ -46,3 +46,7 @@
 .header__person{
     color: aqua;
 }
+
+.list{
+    padding: 0 15px;
+}

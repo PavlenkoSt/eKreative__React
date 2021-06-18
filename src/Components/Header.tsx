@@ -8,7 +8,7 @@ const Header = () => {
 
     return (
         <header className="header">
-            <div className="header__logo">eKreative Video</div>
+            <div className="header__logo">eKreative Videos</div>
             <div className="header__login">
                 {auth ? <span>Вы авторизованы как <span className="header__person">{authUser.name}</span></span> : <span>Вы не авторизованы</span>}
             </div>
