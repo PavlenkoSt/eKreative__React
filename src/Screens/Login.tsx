@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import FacebookLogin from 'react-facebook-login'
 import { useDispatch, useSelector } from 'react-redux'
-import { authActions } from '../Redux/authReducer'
+import { authActions, googleAuth, googleUnauth } from '../Redux/authReducer'
 import { authSelector } from '../Redux/selectors/authSelector'
 import { Redirect } from 'react-router'
 
@@ -22,28 +22,8 @@ const Login = () => {
         })
     },[])
 
-    const signInWithGoogle = async () => {
-        //@ts-ignore
-        const authGoogle = await window?.gapi?.auth2?.getAuthInstance()
-
-        const userData = await authGoogle.signIn()
-        const profile = await userData.getBasicProfile()
-
-        const authUser = {
-            name: profile.getName()
-        }
-
-        dispatch(authActions.setAuthUserSuccess(authUser))
-        dispatch(authActions.setAuthSuccess(true))
-    }
-
-    const signOutWithGoogle = async () => {
-        //@ts-ignore
-        const authGoogle = await window?.gapi?.auth2?.getAuthInstance()
-
-        await authGoogle?.signOut()
-        dispatch(authActions?.setAuthSuccess(false))
-    }
+    const signInWithGoogle = () => dispatch(googleAuth())
+    const signOutWithGoogle = () => dispatch(googleUnauth())
 
     const signInWithFacebook = (response: any) => {
         const authUser = {

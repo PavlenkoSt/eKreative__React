@@ -1,3 +1,7 @@
+import { AnyAction, Store } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { signInWithGoogle, signOutWithGoogle } from "../API/googleAuth"
+
 export const authActionsTypes = {
     SET_AUTH_STATUS: 'SET_AUTH_STATUS',
     SET_AUTH_USER: 'SET_AUTH_USER'
@@ -36,8 +40,20 @@ const authReducer = (state = initialValue, action: any): InitialValueType => {
 export default authReducer
 
 
+export const googleAuth = (): ThunkType => async dispatch => {
+    const authUser = await signInWithGoogle()
+    dispatch(authActions.setAuthUserSuccess(authUser))
+    dispatch(authActions.setAuthSuccess(true))
+}
+
+export const googleUnauth = (): ThunkType => async dispatch => {
+    await signOutWithGoogle()
+    dispatch(authActions.setAuthSuccess(false))
+}
+
 
 type InitialValueType = typeof initialValue
+type ThunkType = ThunkAction<void, Store, unknown, AnyAction>
 
 export type AuthUserType = {
     name: string
