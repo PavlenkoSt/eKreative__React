@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import FacebookLogin from 'react-facebook-login'
+import { useDispatch, useSelector } from 'react-redux'
+import { authActions } from '../Redux/authReducer'
+import { authSelector } from '../Redux/selectors/authSelector'
 
-const Login: any = () => {
-    const [login, setLogin] = useState(false)
-    const [data, setData] = useState({})
+const Login = () => {
+    const dispatch = useDispatch()
+    const auth = useSelector(authSelector)
 
     useEffect(() => {
-        const _onInit = (auth2: any) => {
-            console.log('init OK', auth2)
-        }
-        const _onError = (err: any) => {
-            console.log('error', err)
-        }
+        const _onInit = (auth2: any) => console.log('init OK', auth2)
+        const _onError = (err: any) => console.log('error', err)
+
         //@ts-ignore
         window.gapi.load('auth2', function() {
             //@ts-ignore
@@ -19,58 +19,65 @@ const Login: any = () => {
                 .init({ client_id: '529458314439-788b4lpbh90hb3q6lpr22klopfj36ou8.apps.googleusercontent.com' })
                 .then(_onInit, _onError)
         })
+
+        return () => {
+            signOutWithGoogle()
+            signOutWithFacebook()
+        }
     },[])
 
-    const signInWithGoogle = () => {
+    const signInWithGoogle = async () => {
         //@ts-ignore
-        const auth2 = window.gapi.auth2.getAuthInstance()
-        auth2.signIn().then((googleUser: any) => {
-            const profile = googleUser.getBasicProfile()
-            console.log('ID: ' + profile.getId())
-            console.log('Full Name: ' + profile.getName())
-            console.log('Given Name: ' + profile.getGivenName())
-            console.log('Family Name: ' + profile.getFamilyName())
-            console.log('Image URL: ' + profile.getImageUrl())
-            console.log('Email: ' + profile.getEmail())
-        
-            const id_token = googleUser.getAuthResponse().id_token
-            console.log('ID Token: ' + id_token)
-        })
-      }
-      const signOutWithGoogle = () => {
-        //@ts-ignore
-        const auth2 = window.gapi.auth2.getAuthInstance()
-        auth2.signOut().then(function() {
-            console.log('User signed out.')
-        })
-      }
+        const authGoogle = window.gapi.auth2.getAuthInstance()
 
-    const responseFacebook = (response: any) => {
-        console.log(response);
-        setData(response);
-        if (response.accessToken) {
-            setLogin(true);
-        } else {
-            setLogin(false);
+        const userData = await authGoogle.signIn()
+        const profile = await userData.getBasicProfile()
+
+        const authUser = {
+            name: profile.getName()
         }
+
+        dispatch(authActions.setAuthUserSuccess(authUser))
+        dispatch(authActions.setAuthSuccess(true))
+    }
+
+    const signOutWithGoogle = async () => {
+        //@ts-ignore
+        const authGoogle = window.gapi.auth2.getAuthInstance()
+
+        await authGoogle.signOut()
+        dispatch(authActions.setAuthSuccess(false))
+    }
+
+    const signInWithFacebook = (response: any) => {
+        const authUser = {
+            name: response.name,
+        }
+
+        dispatch(authActions.setAuthUserSuccess(authUser))
+
+        if (response.accessToken) {
+            dispatch(authActions.setAuthSuccess(true))
+        } else {
+            dispatch(authActions.setAuthSuccess(false))
+        }
+    }
+
+    const signOutWithFacebook = () => {
+        dispatch(authActions.setAuthSuccess(false))
     }
   
     return (
-       <>
+       <div className='login'>
         <FacebookLogin 
             appId={'211002797537988'}
-            callback={responseFacebook}
+            callback={signInWithFacebook}
         />
         <button 
             onClick={signInWithGoogle}
-            className='googleSignIn'
+            className='login__google'
         >Login with Google</button>
-        { !login && <div>1</div> }
-        { login && <div>2</div> }
-
-        {/* @ts-ignore */}
-        { login && data.name && data.email && <div>hola</div> }
-       </>
+       </div>
     )
 }
 

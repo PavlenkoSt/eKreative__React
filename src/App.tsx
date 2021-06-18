@@ -1,12 +1,14 @@
 import './App.css'
 import { Route } from 'react-router-dom'
 import Login from './Screens/Login'
+import Header from './Components/Header'
 
 const App = () => {
   return (
-    <div>
+    <>
+      <Header/>
       <Route path='/login' component={Login}/>
-    </div>
+    </>
   )
 }
 

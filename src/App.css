@@ -1,4 +1,33 @@
-.googleSignIn{
+.header{
+    height: 60px;
+    background-color: rgb(49, 49, 49);
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo{
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.header__login{
+    color: #fff;
+    font-size: 16px;
+}
+
+.login{
+    padding: 40px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login__google{
     font-family: Helvetica,sans-serif;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -12,4 +41,8 @@
     background-color: #ba624c;
     border: calc(.06887vw + .67769px) solid #ba534c;
     padding: calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px);
+}
+
+.header__person{
+    color: aqua;
 }
