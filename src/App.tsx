@@ -1,6 +1,6 @@
 import './App.css'
 import { Route } from 'react-router-dom'
-import Login from './Screens/Login';
+import Login from './Screens/Login'
 
 const App = () => {
   return (
