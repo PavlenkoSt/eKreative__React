@@ -1,52 +1,30 @@
 import React, { useEffect } from 'react'
 import FacebookLogin from 'react-facebook-login'
 import { useDispatch, useSelector } from 'react-redux'
-import { authActions, googleAuth, googleUnauth } from '../Redux/authReducer'
+import { authActions, facebookAuth, googleAuth, googleUnauth } from '../Redux/authReducer'
 import { authSelector } from '../Redux/selectors/authSelector'
 import { Redirect } from 'react-router'
+import { installGoogleAuth } from '../API/googleAuth'
 
 const Login = () => {
     const dispatch = useDispatch()
     const auth = useSelector(authSelector)
 
     useEffect(() => {
-        const _onInit = (auth2: any) => console.log('init OK', auth2)
-        const _onError = (err: any) => console.log('error', err)
-
-        //@ts-ignore
-        window?.gapi?.load('auth2', function() {
-            //@ts-ignore
-            window?.gapi?.auth2
-                .init({ client_id: String(process.env.REACT_APP_GOOGLE_AUTH_API) })
-                .then(_onInit, _onError)
-        })
+        installGoogleAuth()
     },[])
 
     const signInWithGoogle = () => dispatch(googleAuth())
     const signOutWithGoogle = () => dispatch(googleUnauth())
 
-    const signInWithFacebook = (response: any) => {
-        const authUser = {
-            name: response.name,
-        }
+    const signInWithFacebook = (response: any) => dispatch(facebookAuth(response))
+    const signOutWithFacebook = () => dispatch(authActions.setAuthSuccess(false))
 
-        dispatch(authActions.setAuthUserSuccess(authUser))
-
-        if (response.accessToken) {
-            dispatch(authActions.setAuthSuccess(true))
-        } else {
-            dispatch(authActions.setAuthSuccess(false))
-        }
-    }
-
-    const signOutWithFacebook = () => {
-        dispatch(authActions.setAuthSuccess(false))
-    }
   
     return (
        <div className='login'>
         <FacebookLogin 
-            appId={'211002797537988'}
+            appId={String(process.env.REACT_APP_FACEBOOK_AUTH_API)}
             callback={signInWithFacebook}
         />
         <button 

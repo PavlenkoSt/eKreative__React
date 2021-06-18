@@ -1,3 +1,4 @@
+import { signInWithFacebook } from './../API/facebookAuth';
 import { AnyAction, Store } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { signInWithGoogle, signOutWithGoogle } from "../API/googleAuth"
@@ -51,6 +52,11 @@ export const googleUnauth = (): ThunkType => async dispatch => {
     dispatch(authActions.setAuthSuccess(false))
 }
 
+export const facebookAuth = (responce: any): ThunkType => async dispatch => {
+    const authUser = await signInWithFacebook(responce)
+    dispatch(authActions.setAuthUserSuccess(authUser))
+    dispatch(authActions.setAuthSuccess(true))
+}
 
 type InitialValueType = typeof initialValue
 type ThunkType = ThunkAction<void, Store, unknown, AnyAction>
