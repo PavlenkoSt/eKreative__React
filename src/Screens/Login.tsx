@@ -21,7 +21,7 @@ const Login: any = () => {
         })
     },[])
 
-    const signIn = () => {
+    const signInWithGoogle = () => {
         //@ts-ignore
         const auth2 = window.gapi.auth2.getAuthInstance()
         auth2.signIn().then((googleUser: any) => {
@@ -37,7 +37,7 @@ const Login: any = () => {
             console.log('ID Token: ' + id_token)
         })
       }
-      const signOut = () => {
+      const signOutWithGoogle = () => {
         //@ts-ignore
         const auth2 = window.gapi.auth2.getAuthInstance()
         auth2.signOut().then(function() {
@@ -61,7 +61,10 @@ const Login: any = () => {
             appId={'211002797537988'}
             callback={responseFacebook}
         />
-        <button onClick={signIn}>Login Google</button>
+        <button 
+            onClick={signInWithGoogle}
+            className='googleSignIn'
+        >Login with Google</button>
         { !login && <div>1</div> }
         { login && <div>2</div> }
 
