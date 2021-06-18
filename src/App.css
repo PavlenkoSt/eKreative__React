@@ -87,3 +87,17 @@
     justify-content: center;
     width: 100%;
 }
+
+.video{
+    padding: 30px 15px;
+}
+
+.video__frame{
+    padding: 15px;
+    background-color: #fff;
+}
+
+.video__info{
+    padding: 15px;
+    background-color: #fff;
+}
