@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
-import { videosActions } from '../Redux/videosReducer'
-import { useDispatch } from 'react-redux'
+import { videosActions, VideoType } from '../Redux/videosReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import VideoForList from '../Components/VideoForList/VideoForList'
+import { videosSelector } from '../Redux/selectors/videosSelector'
 
 
 const Videos = () => {
     const dispatch = useDispatch()
+    const videos = useSelector(videosSelector)
 
     useEffect(() => {
         const getVideos = async () => {
@@ -22,9 +25,16 @@ const Videos = () => {
         getVideos()
     }, [])
 
+    const listRender = videos.map((video: VideoType, i) => <VideoForList
+        key={i}
+        id={video.id}
+        title={video.title}
+        photo={video.photo}
+    />) 
+
     return (
         <div className='list'>
-            VideosList
+            {videos.length ? listRender : <p>Видео пока нет!</p>}
         </div>
     )
 }
