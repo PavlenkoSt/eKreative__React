@@ -17,7 +17,7 @@ const Login = () => {
         window?.gapi?.load('auth2', function() {
             //@ts-ignore
             window?.gapi?.auth2
-                .init({ client_id: '529458314439-788b4lpbh90hb3q6lpr22klopfj36ou8.apps.googleusercontent.com' })
+                .init({ client_id: String(process.env.REACT_APP_GOOGLE_AUTH_API) })
                 .then(_onInit, _onError)
         })
     },[])

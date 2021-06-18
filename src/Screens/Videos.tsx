@@ -11,19 +11,20 @@ const Videos = () => {
 
     useEffect(() => {
         const getVideos = async () => {
-            const data = await fetch('https://www.googleapis.com/youtube/v3/search?key=AIzaSyAbmMW9WnFV2Or3b9w4q6UtuOyB1tQXVNY&channelId=UCP_IYZTiqbmUqmI3KXHIEoQ&maxResults=2&part=snippet')
+            const {REACT_APP_YOUTUBE_API_KEY, REACT_APP_YOUTUBE_CHANNEL_ID} = process.env
+            
+            const data = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${REACT_APP_YOUTUBE_API_KEY}&channelId=${REACT_APP_YOUTUBE_CHANNEL_ID}&maxResults=2&part=snippet`)
             const responce = await data.json()
 
             if(responce && responce.items){
                 const items = responce.items
-                .filter((video: any) => video.id.videoId)
-                .map((video: any) => ({
-                    id: video.id.videoId,
-                    title: video.snippet.title,
-                    photo: video.snippet.thumbnails.default.url
-                }))
-
-            dispatch(videosActions.setVideoSuccess(items))
+                    .filter((video: any) => video.id.videoId)
+                    .map((video: any) => ({
+                        id: video.id.videoId,
+                        title: video.snippet.title,
+                        photo: video.snippet.thumbnails.default.url
+                    }))
+                dispatch(videosActions.setVideoSuccess(items))
             }
         }
         getVideos()
