@@ -14,7 +14,7 @@ const Video = () => {
         if(path && path[1]){
             dispatch(getYoutubeVideoInfo(path[1]))
         }
-    }, [])
+    }, [path])
 
     return (
         <div className='video'>
