@@ -15,15 +15,16 @@ const Login = () => {
 
     return (
         <div className='login'>
-            <FacebookLogin 
-                appId={String(process.env.REACT_APP_FACEBOOK_AUTH_API)}
-                callback={signInWithFacebook}
-            />
             <GoogleLogin
                 clientId={String(process.env.REACT_APP_GOOGLE_AUTH_API)}
                 onSuccess={signInWithGoogle}
                 onFailure={signInWithGoogle}
                 buttonText="LOGIN WITH GOOGLE"
+                className='login__google'
+            />
+            <FacebookLogin 
+                appId={String(process.env.REACT_APP_FACEBOOK_AUTH_API)}
+                callback={signInWithFacebook}
             />
             {auth && <Redirect to='/videosList'/>}
         </div>

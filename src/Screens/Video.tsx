@@ -1,22 +1,13 @@
 import React from 'react'
 import { useEffect } from 'react'
 import ReactPlayer from 'react-player'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
-import { videoInfoSelector } from '../Redux/selectors/videosSelector'
 import { getYoutubeVideoInfo } from '../Redux/videosReducer'
+import InfoForVideo from '../Components/InfoForVideo/InfoForVideo'
 
 const Video = () => {
     const dispatch = useDispatch()
-    const {
-        title,
-        description,
-        viewCount, 
-        likeCount, 
-        favoriteCount, 
-        commentCount
-    } = useSelector(videoInfoSelector)
-
     const path = useHistory().location.pathname.match(/\/video\/(.+)/)
 
     useEffect(() => {
@@ -36,17 +27,9 @@ const Video = () => {
                             height={'420px'}
                         />
                     </div>
-                    <div className='video__info'>
-                        <div className='video__stat'>
-                            <div>Views: {viewCount}</div>
-                            <div>Likes: {likeCount}</div>
-                            <div>Favorite: {favoriteCount}</div>
-                            <div>Comments: {commentCount}</div>
-                        </div>
-                        <div>
-                            <div>{title}</div>
-                            <div>{description}</div>
-                        </div>
+                    <InfoForVideo/>
+                    <div className='video__backlink'>
+                        <NavLink to='/videosList'>Back to videos list</NavLink>
                     </div>
                 </>
             }

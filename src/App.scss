@@ -29,6 +29,8 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .list{
@@ -81,11 +83,53 @@
     }
 
     &__info{
-        padding: 15px;
+        padding: 0 15px 40px;
         background-color: #fff;
     }
 
     &__stat{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 15px;
+        color: #333;
+
+        & div{
+            padding: 0 5px;
+
+            & span{
+                font-weight: 700;
+            }
+        }
+    }
+
+    &__title{
+        font-weight: 700;
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    &__desc{
+        color: rgb(99, 99, 99);
+        font-size: 15px;
+    }
+
+    &__backlink{
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        & a{
+            text-decoration: none;
+            color: rgb(13, 85, 240);
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        
         
     }
 }
