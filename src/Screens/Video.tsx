@@ -1,9 +1,20 @@
 import React from 'react'
+import { useEffect } from 'react'
 import ReactPlayer from 'react-player'
+import { useDispatch } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
+import { getVideoinfo } from '../API/videos'
+import { getYoutubeVideoInfo } from '../Redux/videosReducer'
 
 const Video = () => {
+    const dispatch = useDispatch()
     const path = useHistory().location.pathname.match(/\/video\/(.+)/)
+
+    useEffect(() => {
+        if(path && path[1]){
+            dispatch(getYoutubeVideoInfo(path[1]))
+        }
+    }, [])
 
     return (
         <div className='video'>

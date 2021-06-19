@@ -57,6 +57,7 @@ export const facebookAuth = (responce: any): ThunkType => async dispatch => {
     dispatch(authActions.setAuthSuccess(true))
 }
 
+
 type InitialValueType = typeof initialValue
 type ThunkType = ThunkAction<void, Store, unknown, AnyAction>
 
