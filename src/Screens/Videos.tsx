@@ -13,7 +13,7 @@ const Videos = () => {
         dispatch(getYoutubeVideoList())
     }, [])
 
-    const listRender = videos.map((video: VideoType, i) => <VideoForList
+    const listRender = videos?.map((video: VideoType, i) => <VideoForList
         key={i}
         id={video.id}
         title={video.title}
@@ -22,7 +22,7 @@ const Videos = () => {
 
     return (
         <div className='list'>
-            {videos.length ? listRender : <p>Видео пока нет!</p>}
+            {videos && videos.length ? listRender : <p>Loading...</p>}
         </div>
     )
 }

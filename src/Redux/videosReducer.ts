@@ -10,7 +10,7 @@ export const videosActionsTypes = {
 
 export const videosActions = {
     setVideoSuccess: (videos: Array<VideoType>) => ({ type: videosActionsTypes.SET_VIDEOS, videos}),
-    setCurrentVideoInfoSuccess: (videoInfo: VideoInfoType) => ({ type: videosActionsTypes.SET_VIDEOS, videoInfo})
+    setCurrentVideoInfoSuccess: (videoInfo: VideoInfoType) => ({ type: videosActionsTypes.SET_CURRENT_VIDEO_INFO, videoInfo})
 }
 
 const initialValue = {
@@ -18,7 +18,6 @@ const initialValue = {
     currentVideoInfo: {
         title: '',
         description: '',
-        thumbnail: '',
         viewCount: '',
         likeCount: '',
         favoriteCount: '',
@@ -32,6 +31,12 @@ const videosReducer = (state = initialValue, action: any): InitialValueType => {
             return {
                 ...state,
                 videos: action.videos
+            }
+        }
+        case videosActionsTypes.SET_CURRENT_VIDEO_INFO: {
+            return {
+                ...state,
+                currentVideoInfo: action.videoInfo
             }
         }
         default: return state
@@ -58,19 +63,18 @@ export const getYoutubeVideoList = (): ThunkType => async dispatch => {
 export const getYoutubeVideoInfo = (id: string): ThunkType => async dispatch => {
     const responce = await getVideoinfo(id)
     if(responce.items && responce.items.length && responce.items[0]){
-        const {title, description, thumbnails} = responce.items[0].snippet
+        const {title, description} = responce.items[0].snippet
         const {viewCount, likeCount, favoriteCount, commentCount} = responce.items[0].statistics
 
         const videoInfo = {
             title,
             description,
-            thumbnail: thumbnails.standard.url,
             viewCount, 
             likeCount, 
             favoriteCount, 
             commentCount
         }
-        
+
         dispatch(videosActions.setCurrentVideoInfoSuccess(videoInfo))
     }
 }
@@ -89,7 +93,6 @@ export type VideoType = {
 export type VideoInfoType = {
     title: string
     description: string
-    thumbnail: string
     viewCount: string
     likeCount: string
     favoriteCount: string

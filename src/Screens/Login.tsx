@@ -1,38 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import FacebookLogin from 'react-facebook-login'
+import GoogleLogin from 'react-google-login'
 import { useDispatch, useSelector } from 'react-redux'
-import { authActions, facebookAuth, googleAuth, googleUnauth } from '../Redux/authReducer'
+import { authorizing } from '../Redux/authReducer'
 import { authSelector } from '../Redux/selectors/authSelector'
 import { Redirect } from 'react-router'
-import { installGoogleAuth } from '../API/auth'
 
 const Login = () => {
     const dispatch = useDispatch()
     const auth = useSelector(authSelector)
 
-    useEffect(() => {
-        installGoogleAuth()
-    },[])
+    const signInWithFacebook = (response: any) => dispatch(authorizing(response, 'facebook'))
+    const signInWithGoogle = (response: any) => dispatch(authorizing(response, 'google'))
 
-    const signInWithGoogle = () => dispatch(googleAuth())
-    const signOutWithGoogle = () => dispatch(googleUnauth())
-
-    const signInWithFacebook = (response: any) => dispatch(facebookAuth(response))
-    const signOutWithFacebook = () => dispatch(authActions.setAuthSuccess(false))
-
-  
     return (
-       <div className='login'>
-        <FacebookLogin 
-            appId={String(process.env.REACT_APP_FACEBOOK_AUTH_API)}
-            callback={signInWithFacebook}
-        />
-        <button 
-            onClick={signInWithGoogle}
-            className='login__google'
-        >Login with Google</button>
-        {auth && <Redirect to='/videosList'/>}
-       </div>
+        <div className='login'>
+            <FacebookLogin 
+                appId={String(process.env.REACT_APP_FACEBOOK_AUTH_API)}
+                callback={signInWithFacebook}
+            />
+            <GoogleLogin
+                clientId={String(process.env.REACT_APP_GOOGLE_AUTH_API)}
+                onSuccess={signInWithGoogle}
+                onFailure={signInWithGoogle}
+                buttonText="LOGIN WITH GOOGLE"
+            />
+            {auth && <Redirect to='/videosList'/>}
+        </div>
     )
 }
 

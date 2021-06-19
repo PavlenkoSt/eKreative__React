@@ -1,4 +1,4 @@
-import './App.css'
+import './App.scss'
 import { Route, Redirect } from 'react-router-dom'
 import Login from './Screens/Login'
 import Header from './Components/Header/Header'
