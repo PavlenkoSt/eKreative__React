@@ -1,4 +1,11 @@
 // @ts-nocheck
+
+export const signInWithFacebook = (response: any) => {
+    return {
+        name: response.name,
+    }
+}
+
 export const signInWithGoogle = async () => {
     const authGoogle = await window?.gapi?.auth2?.getAuthInstance()
 

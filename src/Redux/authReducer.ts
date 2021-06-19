@@ -1,7 +1,6 @@
-import { signInWithFacebook } from './../API/facebookAuth';
+import { signInWithFacebook, signInWithGoogle, signOutWithGoogle } from './../API/auth'
 import { AnyAction, Store } from "redux"
 import { ThunkAction } from "redux-thunk"
-import { signInWithGoogle, signOutWithGoogle } from "../API/googleAuth"
 
 export const authActionsTypes = {
     SET_AUTH_STATUS: 'SET_AUTH_STATUS',

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authActions, facebookAuth, googleAuth, googleUnauth } from '../Redux/authReducer'
 import { authSelector } from '../Redux/selectors/authSelector'
 import { Redirect } from 'react-router'
-import { installGoogleAuth } from '../API/googleAuth'
+import { installGoogleAuth } from '../API/auth'
 
 const Login = () => {
     const dispatch = useDispatch()
