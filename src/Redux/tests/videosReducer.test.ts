@@ -1,7 +1,15 @@
 import videosReducer, {videosActions} from '../videosReducer'
 
 const state = {
-    videos: []
+    videos: [],
+    currentVideoInfo: {
+        title: '',
+        description: '',
+        viewCount: '',
+        likeCount: '',
+        favoriteCount: '',
+        commentCount: ''
+    }
 }
 
 describe('videos reducer', () => {
@@ -16,5 +24,20 @@ describe('videos reducer', () => {
         const action = videosActions.setVideoSuccess(newVideos)
         const modernizedStatePosts = videosReducer(state, action)
         expect(modernizedStatePosts.videos.length).toBe(1)
+    })
+
+    it('currentVideoInfo title should be helloWorld', () => {
+        const newCurrentVideoInfo = { 
+            title: 'helloWorld',
+            description: '',
+            viewCount: '',
+            likeCount: '',
+            favoriteCount: '',
+            commentCount: ''
+        }
+        
+        const action = videosActions.setCurrentVideoInfoSuccess(newCurrentVideoInfo)
+        const modernizedStatePosts = videosReducer(state, action)
+        expect(modernizedStatePosts.currentVideoInfo.title).toBe('helloWorld')
     })
 })

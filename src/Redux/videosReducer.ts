@@ -9,8 +9,8 @@ export const videosActionsTypes = {
 }
 
 export const videosActions = {
-    setVideoSuccess: (videos: Array<VideoType>) => ({ type: videosActionsTypes.SET_VIDEOS, videos}),
-    setCurrentVideoInfoSuccess: (videoInfo: VideoInfoType) => ({ type: videosActionsTypes.SET_CURRENT_VIDEO_INFO, videoInfo})
+    setVideoSuccess: (videos: Array<VideoType>) => ({ type: videosActionsTypes.SET_VIDEOS, videos} as const),
+    setCurrentVideoInfoSuccess: (videoInfo: VideoInfoType) => ({ type: videosActionsTypes.SET_CURRENT_VIDEO_INFO, videoInfo} as const)
 }
 
 const initialValue = {
@@ -62,7 +62,7 @@ export const getYoutubeVideoList = (): ThunkType => async dispatch => {
 
 export const getYoutubeVideoInfo = (id: string): ThunkType => async dispatch => {
     const responce = await getVideoinfo(id)
-    if(responce.items && responce.items.length && responce.items[0]){
+    if(responce && responce.items && responce.items.length && responce.items[0]){
         const {title, description} = responce.items[0].snippet
         const {viewCount, likeCount, favoriteCount, commentCount} = responce.items[0].statistics
 
